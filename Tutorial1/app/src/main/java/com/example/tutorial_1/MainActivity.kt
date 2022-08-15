@@ -1,5 +1,6 @@
 package com.example.tutorial_1
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -14,6 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.tutorial_1.ui.theme.Tutorial1Theme
@@ -44,7 +46,7 @@ fun MyApp() {
 
 @Composable
 fun Greetings(
-    titleList: List<String> = List(30) { it.toString() }
+    titleList: List<String> = List(30) { (it + 1).toString() }
 ) {
     LazyColumn {
         items(items = titleList) { name: String ->
@@ -78,7 +80,11 @@ fun Greeting(name: String) {
                     .padding(bottom = extraPadding.coerceAtLeast(0.dp))
             ) {
                 Text(text = "Hello, ")
-                Text(text = name)
+                Text(
+                    text = name, style = MaterialTheme.typography.h4.copy(
+                        fontWeight = FontWeight.Bold,
+                    )
+                )
             }
             OutlinedButton(
                 onClick = { expanded = !expanded }
@@ -86,14 +92,6 @@ fun Greeting(name: String) {
                 Text(text = if (expanded) "show less" else "show more")
             }
         }
-    }
-}
-
-@Composable
-@Preview(showBackground = true)
-fun DefaultPreview() {
-    Tutorial1Theme {
-        Greeting("Android")
     }
 }
 
@@ -117,6 +115,21 @@ fun OnBoardingScreen(onContinueClick: () -> Unit) {
     }
 }
 
+@Composable
+@Preview(showBackground = true)
+fun DefaultPreview() {
+    Tutorial1Theme {
+        Greeting("56")
+    }
+}
+
+@Preview(
+    showBackground = true,
+    widthDp = 320,
+    uiMode = UI_MODE_NIGHT_YES,
+    name = "DefaultPreviewDark",
+    heightDp = 320
+)
 @Preview(showBackground = true, widthDp = 320, heightDp = 320)
 @Composable
 fun OnBoardingPreview() {
