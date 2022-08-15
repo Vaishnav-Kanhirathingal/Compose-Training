@@ -3,13 +3,14 @@ package com.example.tutorial_1
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,7 +46,7 @@ fun MyApp() {
 fun Greetings(
     titleList: List<String> = List(30) { it.toString() }
 ) {
-    LazyColumn(modifier = Modifier.padding(24.dp)) {
+    LazyColumn {
         items(items = titleList) { name: String ->
             Greeting(name = name)
         }
@@ -54,8 +55,14 @@ fun Greetings(
 
 @Composable
 fun Greeting(name: String) {
-    val expanded = remember { mutableStateOf(false) }
-    val extraPadding = if (expanded.value) 64.dp else 32.dp
+    var expanded by remember { mutableStateOf(false) }
+    val extraPadding by animateDpAsState(
+        targetValue = if (expanded) 64.dp else 0.dp,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessMedium
+        )
+    )
     Surface(
         color = MaterialTheme.colors.primary,
         modifier = Modifier.padding(vertical = 4.dp, horizontal = 4.dp)
@@ -68,17 +75,15 @@ fun Greeting(name: String) {
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(bottom = extraPadding)
+                    .padding(bottom = extraPadding.coerceAtLeast(0.dp))
             ) {
                 Text(text = "Hello, ")
                 Text(text = name)
             }
             OutlinedButton(
-                onClick = {
-                    expanded.value = !expanded.value
-                }
+                onClick = { expanded = !expanded }
             ) {
-                Text(text = if (expanded.value) "show less" else "show more")
+                Text(text = if (expanded) "show less" else "show more")
             }
         }
     }
