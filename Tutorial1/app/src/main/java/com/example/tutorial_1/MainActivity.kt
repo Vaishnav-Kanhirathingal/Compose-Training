@@ -19,7 +19,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             Tutorial1Theme {
-                myApp()
+                Surface(color = MaterialTheme.colors.background) {
+                    MyApp()
+                }
             }
         }
     }
@@ -27,20 +29,29 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 @Preview(showBackground = true)
-fun myApp() {
-    Surface(color = MaterialTheme.colors.background) {
-        Column(modifier = Modifier.padding(24.dp)) {
-            val listOfNames = listOf<String>(
-                "ROW - 1",
-                "ROW - 12",
-                "ROW - 123",
-                "ROW - 1234",
-                "ROW - 12345",
-                "ROW - 123456"
-            )
-            for (i in listOfNames) {
-                Greeting(name = i)
-            }
+fun MyApp() {
+    val shouldShowOnBoarding = remember { mutableStateOf(true) }
+    if (shouldShowOnBoarding.value) {
+        OnBoardingScreen(onContinueClick = { shouldShowOnBoarding.value = false })
+    } else {
+        Greetings()
+    }
+}
+
+@Composable
+fun Greetings(
+    titleList: List<String> = listOf(
+        "ROW - 1",
+        "ROW - 12",
+        "ROW - 123",
+        "ROW - 1234",
+        "ROW - 12345",
+        "ROW - 123456"
+    )
+) {
+    Column(modifier = Modifier.padding(24.dp)) {
+        for (title in titleList) {
+            Greeting(name = title)
         }
     }
 }
@@ -86,12 +97,8 @@ fun DefaultPreview() {
 }
 
 @Composable
-fun OnboardingScreen() {
+fun OnBoardingScreen(onContinueClick: () -> Unit) {
     // TODO: This state should be hoisted
-    val shouldShowOnBoarding = remember {
-        mutableStateOf(true)
-    }
-
     Surface {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -101,7 +108,7 @@ fun OnboardingScreen() {
             Text("Welcome to the Basics Codelab!")
             Button(
                 modifier = Modifier.padding(vertical = 24.dp),
-                onClick = { shouldShowOnBoarding.value = false }
+                onClick = onContinueClick
             ) {
                 Text("Continue")
             }
@@ -111,8 +118,8 @@ fun OnboardingScreen() {
 
 @Preview(showBackground = true, widthDp = 320, heightDp = 320)
 @Composable
-fun OnboardingPreview() {
+fun OnBoardingPreview() {
     Tutorial1Theme {
-        OnboardingScreen()
+        OnBoardingScreen {}
     }
 }
