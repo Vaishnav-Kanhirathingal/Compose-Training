@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -40,18 +42,11 @@ fun MyApp() {
 
 @Composable
 fun Greetings(
-    titleList: List<String> = listOf(
-        "ROW - 1",
-        "ROW - 12",
-        "ROW - 123",
-        "ROW - 1234",
-        "ROW - 12345",
-        "ROW - 123456"
-    )
+    titleList: List<String> = List(30) { it.toString() }
 ) {
-    Column(modifier = Modifier.padding(24.dp)) {
-        for (title in titleList) {
-            Greeting(name = title)
+    LazyColumn(modifier = Modifier.padding(24.dp)) {
+        items(items = titleList) { name: String ->
+            Greeting(name = name)
         }
     }
 }
