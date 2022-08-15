@@ -10,6 +10,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,7 +33,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 @Preview(showBackground = true)
 fun MyApp() {
-    val shouldShowOnBoarding = remember { mutableStateOf(true) }
+    val shouldShowOnBoarding = rememberSaveable { mutableStateOf(true) }
     if (shouldShowOnBoarding.value) {
         OnBoardingScreen(onContinueClick = { shouldShowOnBoarding.value = false })
     } else {
@@ -100,7 +101,7 @@ fun OnBoardingScreen(onContinueClick: () -> Unit) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Welcome to the Basics Codelab!")
+            Text("Welcome to the Basics Code lab!")
             Button(
                 modifier = Modifier.padding(vertical = 24.dp),
                 onClick = onContinueClick
