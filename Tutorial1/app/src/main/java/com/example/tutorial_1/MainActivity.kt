@@ -81,9 +81,8 @@ fun Greeting(name: String) {
             ) {
                 Text(text = "Hello, ")
                 Text(
-                    text = name, style = MaterialTheme.typography.h4.copy(
-                        fontWeight = FontWeight.Bold,
-                    )
+                    text = name,
+                    style = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.ExtraBold)
                 )
             }
             OutlinedButton(
@@ -130,7 +129,11 @@ fun DefaultPreview() {
     name = "DefaultPreviewDark",
     heightDp = 320
 )
-@Preview(showBackground = true, widthDp = 320, heightDp = 320)
+@Preview(
+    showBackground = true,
+    widthDp = 320,
+    heightDp = 320
+)
 @Composable
 fun OnBoardingPreview() {
     Tutorial1Theme {
