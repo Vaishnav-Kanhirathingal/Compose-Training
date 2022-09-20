@@ -64,7 +64,7 @@ fun Home() {
                 item {
                     Header(stringResource(R.string.popular))
                 }
-                items(posts) { post ->
+                items(posts) { post: Post ->
                     PostItem(post = post)
                     Divider(startIndent = 72.dp)
                 }
