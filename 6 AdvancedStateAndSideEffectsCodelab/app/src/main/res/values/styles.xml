@@ -25,5 +25,5 @@
         <item name="android:windowBackground">@color/colorPrimary</item>
     </style>
 
-    <style name="Theme.Crane" parent="Theme"/>
+    <style name="Theme.Crane" parent="Theme" />
 </resources>
