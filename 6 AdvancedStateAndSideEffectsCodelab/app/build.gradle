@@ -30,11 +30,11 @@ if (rootProject.file("local.properties").exists()) {
 }
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 33
     defaultConfig {
         applicationId "androidx.compose.samples.crane"
         minSdkVersion 21
-        targetSdkVersion 32
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
@@ -97,6 +97,8 @@ android {
 }
 
 dependencies {
+    def lifecycle_version="2.6.0"
+
     implementation Libs.Kotlin.stdlib
     implementation Libs.Kotlin.Coroutines.android
     implementation Libs.GoogleMaps.maps
@@ -117,8 +119,12 @@ dependencies {
     implementation Libs.AndroidX.Compose.layout
     implementation Libs.AndroidX.Compose.animation
     implementation Libs.AndroidX.Compose.toolingPreview
+
     implementation Libs.AndroidX.Lifecycle.viewModelCompose
     implementation Libs.AndroidX.Lifecycle.viewModelKtx
+
+    implementation "androidx.lifecycle:lifecycle-runtime-compose:$lifecycle_version"
+
     implementation Libs.Hilt.android
     debugImplementation Libs.AndroidX.Compose.tooling
     kapt Libs.Hilt.compiler
