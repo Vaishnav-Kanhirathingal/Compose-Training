@@ -97,7 +97,7 @@ android {
 }
 
 dependencies {
-    def lifecycle_version="2.6.0"
+    def lifecycle_version = "2.6.0"
 
     implementation Libs.Kotlin.stdlib
     implementation Libs.Kotlin.Coroutines.android
