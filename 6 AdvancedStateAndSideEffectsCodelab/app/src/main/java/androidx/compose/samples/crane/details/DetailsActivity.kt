@@ -92,6 +92,30 @@ fun DetailsScreen(
     viewModel: DetailsViewModel = viewModel()
 ) {
     // TODO Codelab: produceState step - Show loading screen while fetching city details
+    val uIState by produceState(initialValue = DetailsUIState(isLoading = true)) {
+        val cityDetailsResult = viewModel.cityDetails
+        value = if (cityDetailsResult is Result.Success<ExploreModel>) {
+            DetailsUIState(cityDetailsResult.data)
+        } else {
+            DetailsUIState(throwError = true)
+        }
+    }
+    when {
+        uIState.cityDetails != null -> {
+            DetailsContent(uIState.cityDetails!!, modifier.fillMaxSize())
+        }
+        uIState.isLoading -> {
+            Box(modifier.fillMaxSize()) {
+                CircularProgressIndicator(
+                    color = MaterialTheme.colors.onSurface,
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            }
+        }
+        else -> onErrorLoading()
+
+    }
+
     val cityDetails = remember(viewModel) { viewModel.cityDetails }
     if (cityDetails is Result.Success<ExploreModel>) {
         DetailsContent(cityDetails.data, modifier.fillMaxSize())
@@ -197,3 +221,9 @@ private fun ZoomButton(text: String, onClick: () -> Unit) {
 private const val InitialZoom = 5f
 const val MinZoom = 2f
 const val MaxZoom = 20f
+
+data class DetailsUIState(
+    val cityDetails: ExploreModel? = null,
+    val isLoading: Boolean = false,
+    val throwError: Boolean = false
+)
