@@ -68,7 +68,7 @@ fun RallyApp() {
                 )
             }
         ) { innerPadding ->
-            rallyNavHost(
+            RallyNavHost(
                 navController = navController,
                 modifier = Modifier.padding(innerPadding)
             )
@@ -77,7 +77,7 @@ fun RallyApp() {
 }
 
 @Composable
-fun rallyNavHost(navController: NavHostController, modifier: Modifier) {
+fun RallyNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
     NavHost(
         navController = navController,
         startDestination = Overview.route,
