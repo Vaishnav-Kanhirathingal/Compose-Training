@@ -68,42 +68,51 @@ fun RallyApp() {
                 )
             }
         ) { innerPadding ->
-            NavHost(
+            rallyNavHost(
                 navController = navController,
-                startDestination = Overview.route,
                 modifier = Modifier.padding(innerPadding)
-            ) {
-                composable(route = Overview.route) {
-                    OverviewScreen(
-                        onClickSeeAllAccounts = {
-                            navController.navigateSingleTopTo(Accounts.route)
-                        },
-                        onClickSeeAllBills = {
-                            navController.navigateSingleTopTo(Bills.route)
-                        },
-                        onAccountClick = {
-                            navController.navigateToSingleAccount(it)
-                        }
-                    )
+            )
+        }
+    }
+}
+
+@Composable
+fun rallyNavHost(navController: NavHostController, modifier: Modifier) {
+    NavHost(
+        navController = navController,
+        startDestination = Overview.route,
+        modifier = modifier
+    ) {
+        composable(route = Overview.route) {
+            OverviewScreen(
+                onClickSeeAllAccounts = {
+                    navController.navigateSingleTopTo(Accounts.route)
+                },
+                onClickSeeAllBills = {
+                    navController.navigateSingleTopTo(Bills.route)
+                },
+                onAccountClick = {
+                    navController.navigateToSingleAccount(it)
                 }
-                composable(route = Accounts.route) {
-                    AccountsScreen(
-                        onAccountClick = {
-                            navController.navigateToSingleAccount(it)
-                        }
-                    )
+            )
+        }
+        composable(route = Accounts.route) {
+            AccountsScreen(
+                onAccountClick = {
+                    navController.navigateToSingleAccount(it)
                 }
-                composable(route = Bills.route) {
-                    BillsScreen()
-                }
-                composable(
-                    route = SingleAccount.routeWithArgs,
-                    arguments = SingleAccount.arguments
-                ) {
-                    val accountType = it.arguments?.getString(SingleAccount.accountTypeArg)
-                    SingleAccountScreen(accountType = accountType)
-                }
-            }
+            )
+        }
+        composable(route = Bills.route) {
+            BillsScreen()
+        }
+        composable(
+            route = SingleAccount.routeWithArgs,
+            arguments = SingleAccount.arguments,
+            deepLinks = SingleAccount.deepLinks
+        ) {
+            val accountType = it.arguments?.getString(SingleAccount.accountTypeArg)
+            SingleAccountScreen(accountType = accountType)
         }
     }
 }
