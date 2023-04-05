@@ -71,12 +71,10 @@ fun ArticleScreen(
     post: Post,
     onBack: () -> Unit
 ) {
-
     var showDialog by rememberSaveable { mutableStateOf(false) }
     if (showDialog) {
         FunctionalityNotAvailablePopup { showDialog = false }
     }
-
     Scaffold(
         topBar = {
             InsetAwareTopAppBar(
