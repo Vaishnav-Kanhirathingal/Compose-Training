@@ -46,9 +46,11 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun ReplyAppPreview() {
     ReplyTheme {
-        ReplyApp(replyHomeUIState = ReplyHomeUIState(
-            emails = LocalEmailsDataProvider.allEmails
-        ))
+        ReplyApp(
+            replyHomeUIState = ReplyHomeUIState(
+                emails = LocalEmailsDataProvider.allEmails
+            )
+        )
     }
 }
 
@@ -56,9 +58,11 @@ fun ReplyAppPreview() {
 @Composable
 fun ReplyAppPreviewTablet() {
     ReplyTheme {
-        ReplyApp(replyHomeUIState = ReplyHomeUIState(
-            emails = LocalEmailsDataProvider.allEmails
-        ))
+        ReplyApp(
+            replyHomeUIState = ReplyHomeUIState(
+                emails = LocalEmailsDataProvider.allEmails
+            )
+        )
     }
 }
 
@@ -66,8 +70,10 @@ fun ReplyAppPreviewTablet() {
 @Composable
 fun ReplyAppPreviewDesktop() {
     ReplyTheme {
-        ReplyApp(replyHomeUIState = ReplyHomeUIState(
-            emails = LocalEmailsDataProvider.allEmails
-        ))
+        ReplyApp(
+            replyHomeUIState = ReplyHomeUIState(
+                emails = LocalEmailsDataProvider.allEmails
+            )
+        )
     }
 }
