@@ -20,6 +20,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,13 +33,14 @@ class MainActivity : ComponentActivity() {
 
     private val viewModel: ReplyHomeViewModel by viewModels()
 
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContent {
             ReplyTheme {
+                val windowSize = calculateWindowSizeClass(activity = this)
                 val uiState = viewModel.uiState.collectAsState().value
-                ReplyApp(uiState)
+                ReplyApp(uiState, windowSize.widthSizeClass)
             }
         }
     }
@@ -49,7 +53,8 @@ fun ReplyAppPreview() {
         ReplyApp(
             replyHomeUIState = ReplyHomeUIState(
                 emails = LocalEmailsDataProvider.allEmails
-            )
+            ),
+            windowSize = WindowWidthSizeClass.Compact
         )
     }
 }
@@ -61,7 +66,8 @@ fun ReplyAppPreviewTablet() {
         ReplyApp(
             replyHomeUIState = ReplyHomeUIState(
                 emails = LocalEmailsDataProvider.allEmails
-            )
+            ),
+            windowSize = WindowWidthSizeClass.Medium
         )
     }
 }
@@ -73,7 +79,8 @@ fun ReplyAppPreviewDesktop() {
         ReplyApp(
             replyHomeUIState = ReplyHomeUIState(
                 emails = LocalEmailsDataProvider.allEmails
-            )
+            ),
+            windowSize = WindowWidthSizeClass.Expanded
         )
     }
 }
